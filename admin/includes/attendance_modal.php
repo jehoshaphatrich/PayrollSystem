@@ -5,10 +5,10 @@
           	<div class="modal-header">
             	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
               		<span aria-hidden="true">&times;</span></button>
-            	<h4 class="modal-title"><b>Time in Employee</b></h4>
+            	<h4 class="modal-title"><b>Scan Employee QRCODE</b></h4>
           	</div>
           	<div class="modal-body">
-              <form id="attendance">
+              <form id="attendanceqr">
         <select class="form-control mb-1" name="status">
           <option value="in">Time In</option>
           <option value="out">Time Out</option>

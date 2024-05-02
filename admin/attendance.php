@@ -238,6 +238,7 @@
               $('.alert-danger').show();
               $('.message').html(response.message);
               Notiflix.Notify.failure(response.message);
+             
 
             } else {
               $('.alert').hide();
@@ -246,11 +247,12 @@
               $('#employee').val('');
               Notiflix.Notify.success(response.message);
               $('#scan').modal('hide');
+              scanner.clear();
             }
           }
         });
 
-        scanner.clear();
+        
 
         // Clears scanning instance
 
