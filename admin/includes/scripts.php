@@ -1,4 +1,5 @@
 <!-- jQuery 3 -->
+
 <script src="../bower_components/jquery/dist/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
 <script src="../bower_components/jquery-ui/jquery-ui.min.js"></script>
@@ -41,12 +42,15 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="../dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="../dist/js/demo.js"></script>
+<script src="../dist/js/demo.js"></script> 
+<script src="../dist/js/qrcode/qrcode.min.js"></script> 
+<script src="../dist/js/basicLightbox.min.js"></script> 
+
+
 <script>
+  
   $(function () {
-    $('#example1').DataTable({
-      responsive: true
-    })
+   
     $('#example2').DataTable({
       'paging'      : true,
       'lengthChange': false,

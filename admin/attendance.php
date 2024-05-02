@@ -5,7 +5,19 @@
 
   <?php include 'includes/navbar.php'; ?>
   <?php include 'includes/menubar.php'; ?>
-
+<style>
+ .qrcode{
+  cursor: pointer;
+ }
+ .qrcode:hover {
+  /* filter: grayscale(100%);
+  display: none; */
+ }
+ .qrcode img:hover{
+  scale: 1.3;
+  transition: all ease-in-out 300ms;
+ }
+</style>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -54,6 +66,7 @@
                   <th class="hidden"></th>
                   <th>Date</th>
                   <th>Employee ID</th>
+                  <th>QR</th>
                   <th>Name</th>
                   <th>Time In</th>
                   <th>Time Out</th>
@@ -69,8 +82,9 @@
                         <tr>
                           <td class='hidden'></td>
                           <td>".date('M d, Y', strtotime($row['date']))."</td>
-                          <td>".$row['empid']."</td>
-                          <td>".$row['firstname'].' '.$row['lastname']."</td>
+                          <td>".$row['empid']." </td>
+                          <td><div class='qrcode' data-qrcode='".$row['empid']."'></div></td>
+                          <td>".$row['firstname'].' '.$row['lastname']." </td>
                           <td>".date('h:i A', strtotime($row['time_in'])).$status."</td>
                           <td>".date('h:i A', strtotime($row['time_out']))."</td>
                           <td>
@@ -88,13 +102,78 @@
         </div>
       </div>
     </section>   
+
+
   </div>
     
   <?php include 'includes/footer.php'; ?>
   <?php include 'includes/attendance_modal.php'; ?>
 </div>
 <?php include 'includes/scripts.php'; ?>
+
+
 <script>
+  $( document ).ready(function() {
+   
+    const qrcode = document.querySelectorAll('.qrcode');
+    const qrClick = document.querySelector('tbody');
+        console.log(qrcode);
+    qrcode.forEach(function(item) {
+      var dataValue = item.getAttribute('data-qrcode');
+
+      var options = {
+            text: dataValue,
+            width: 50,
+            height: 50,
+            colorDark : "#000000",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.L
+        };
+        var qrCode = new QRCode(item, options);
+
+      console.log(qrCode);
+      
+});
+qrClick.addEventListener('click',(e) => {
+  console.log(e.target);
+if(e.target.tagName === 'IMG'){
+  var parentDiv = e.target.closest('.qrcode');
+        // Retrieve the data-qrcode attribute from the parent div
+        var parentQRcode = parentDiv.getAttribute('data-qrcode');
+  var options = {
+            text: parentQRcode,
+            width: 500,
+            height: 500,
+            colorDark : "#000000",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.L
+        };
+
+    const instance = basicLightbox.create(`
+   <a id='qrdownload' style="color:white; font-size:16px"  href=""download>
+   ClICK THE QR TO DOWNLOAD
+   <div id="qr"></div></a>
+`)
+instance.show()
+if(document.getElementById('qr')){
+  var qr = new QRCode(document.getElementById('qr'),options);
+  var qrDownloadA = document.getElementById('qrdownload');
+  var canvas = document.getElementById('qr').getElementsByTagName('canvas')[0];
+
+// Get the data URL of the QR code image from the canvas
+var qrDataUrl = canvas.toDataURL();
+    // Set the href attribute of the parent anchor tag to the image source
+    qrDownloadA.setAttribute("href", qrDataUrl);
+}
+}
+});
+        
+$('#example1').DataTable({
+      responsive: true
+    })    
+
+});
+  
 $(function(){
   $('.edit').click(function(e){
     e.preventDefault();
